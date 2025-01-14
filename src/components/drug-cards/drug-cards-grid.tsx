@@ -1,11 +1,31 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, RefObject } from 'react';
 import { Card } from '@/components/ui/card';
 import { ArrowUpRight, Calendar, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const DrugCard = ({ drug }) => {
-  const getSuccessProbabilityColor = (probability) => {
+interface Probability {
+  value: number;
+  context: string;
+}
+
+interface Drug {
+  name: string;
+  company: string;
+  launch: string;
+  sales: number;
+  indication: string;
+  moa: string;
+  probabilities: Probability[];
+  features: string[];
+}
+
+interface DrugCardProps {
+  drug: Drug;
+}
+
+const DrugCard = ({ drug }: DrugCardProps) => {
+  const getSuccessProbabilityColor = (probability: number): string => {
     if (probability >= 90) return 'bg-green-600';
     if (probability >= 70) return 'bg-yellow-500';
     return 'bg-red-500';
@@ -84,9 +104,9 @@ const DrugCard = ({ drug }) => {
 };
 
 const DrugCards = () => {
-  const scrollContainerRef = useRef(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const scroll = (direction) => {
+  const scroll = (direction: 'left' | 'right') => {
     const container = scrollContainerRef.current;
     if (!container) return;
     const scrollAmount = 450;

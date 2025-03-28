@@ -2,11 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'export',  // Add this for static export
-  basePath: '/drug-cards', // Add this - should match your repository name
+  output: 'export',  // This is good for static export
+  basePath: process.env.VERCEL ? '' : '/drug-cards', // Conditional basePath
+  assetPrefix: process.env.VERCEL ? '' : '/drug-cards', // Also add assetPrefix
   images: {
-    unoptimized: true // Add this for static export
+    unoptimized: true // This is good for static export
   }
 }
-
 module.exports = nextConfig
